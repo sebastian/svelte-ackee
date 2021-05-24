@@ -27,7 +27,7 @@ locationStore.subscribe((l) => {
  * @returns {Object} ackee-tracker instance.
  */
 const useAckeeSapper = function (beforeUpdate, afterUpdate, server, opts = {}) {
-  let currentInstance = ackeeTracker.create(server, opts);
+  let currentInstance = ackeeTracker.create(server.server, opts);
   beforeUpdate(() => {
     if (typeof window !== "undefined") {
       locationStore.update((l) => {
@@ -46,7 +46,7 @@ const useAckeeSapper = function (beforeUpdate, afterUpdate, server, opts = {}) {
       const attributes = ackeeTracker.attributes(opts.detailed);
       const url = new URL(path, location);
 
-      currentInstance.record({
+      currentInstance.record(server.domainId, {
         ...attributes,
         siteLocation: url.href,
       }).stop;
